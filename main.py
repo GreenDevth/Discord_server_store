@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from discord_components import DiscordComponents
-from config import config_cogs, get_token
+from config.config import config_cogs, get_token
 bot = commands.Bot(command_prefix='/')
 DiscordComponents(bot)
 
