@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from database.Players import exp_update
 from database.Bank_db import plus_coins
+from database.WWII_db import show_players, count_color_team
+from discord_components import Button, ButtonStyle
 
 
 class ScumPlayers(commands.Cog):
@@ -40,6 +42,34 @@ class ScumPlayers(commands.Cog):
             await ctx.reply('Your commands mission argument, Please verify again.', mention_author=False)
         if isinstance(error, commands.MissingPermissions):
             await ctx.reply('Your Role are used this commands.')
+
+    @commands.Cog.listener()
+    async def on_button_click(self, interaction):
+        btn = interaction.component.custom_id
+        check_list = ["red_check", "blue_check"]
+        if btn in check_list:
+            x = show_players(btn)
+            y = count_color_team(btn)
+            msg = f'📃**แสดงรายการผู้เข้าร่วมกิจกรรม**\n```{x}\n\n==========='\
+                  f'================\nจำนวนสมาชิกทีม RED : {y} คน```'
+            await interaction.respond(content=msg)
+
+    @commands.command(name='show_players')
+    async def show_player(self, ctx):
+
+        await ctx.send(
+            file=discord.File('./img/the_battle_check.png'),
+            components=[
+                [
+                    Button(style=ButtonStyle.red, label='RED CHECK', emoji='⚔', custom_id='red_check'),
+                    Button(style=ButtonStyle.blue, label='BLUE CHECK', emoji='⚔', custom_id='blue_check')
+                ]
+            ]
+        )
+        await ctx.message.delete()
+        # print(type(x))
+        # await ctx.send(
+        # )
 
 
 def setup(bot):

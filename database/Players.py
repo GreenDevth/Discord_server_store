@@ -91,4 +91,3 @@ def exp_update(discord_id, exp):
         exp = players_info(discord_id)
         msg = exp[7]
     return msg
-
