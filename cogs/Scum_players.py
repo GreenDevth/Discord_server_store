@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
-from database.Players import *
+from database.Players import exp_update
+from database.Bank_db import plus_coins
 
 
 class ScumPlayers(commands.Cog):
