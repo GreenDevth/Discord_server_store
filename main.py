@@ -10,7 +10,7 @@ token = get_token(11)
 
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user.name} (ID : {bot.user.id})')
+    print(f'Logged in as {bot.user.name}')
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='Playing Events'))
 
 config_cogs(bot)
