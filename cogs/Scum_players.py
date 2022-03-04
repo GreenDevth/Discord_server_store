@@ -46,7 +46,7 @@ class ScumPlayers(commands.Cog):
     @commands.Cog.listener()
     async def on_button_click(self, interaction):
         btn = interaction.component.custom_id
-        check_list = ["red_check", "blue_check", "all_check"]
+        check_list = ["red_check", "blue_check"]
         if btn in check_list:
             x = show_players(btn)
             y = count_color_team(btn)
