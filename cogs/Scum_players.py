@@ -50,7 +50,7 @@ class ScumPlayers(commands.Cog):
         if btn in check_list:
             x = show_players(btn)
             y = count_color_team(btn)
-            msg = f'📃**แสดงรายชื่อผู้เข้าร่วมกิจกรรม**\n```{x}\n\n==========='\
+            msg = f'📃**แสดงรายชื่อผู้เข้าร่วมกิจกรรม**\n```{x}\n\n===========' \
                   f'================\nจำนวนสมาชิกทีม RED : {y} คน```'
             await interaction.respond(content=msg)
         elif btn == 'all_check':
@@ -74,6 +74,14 @@ class ScumPlayers(commands.Cog):
             ]
         )
         await ctx.message.delete()
+
+    @commands.command(name='show_all')
+    async def show_all(self, ctx):
+        x = show_players("all_check")
+        y = all_count()
+        msg = f'📃**แสดงรายชื่อผู้เข้าร่วมกิจกรรม**\n```{x}\n\n===========' \
+              f'================\nจำนวน ผู้ลงทะเบียนทั้งหมด : {y} คน```'
+        await ctx.send(content=msg)
 
 
 def setup(bot):
