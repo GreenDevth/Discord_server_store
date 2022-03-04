@@ -53,10 +53,10 @@ class ScumPlayers(commands.Cog):
         if number <= coin:
             coins = minus_coins(member.id, number)
             player = players_info(member.id)
-            message = f'ระบบได้หักเงินจำนวน {number} จากบัญชีของ {player[1]} ยอดคงเหลือของคุณคือ {player[5]}'
+            message = f'ระบบได้หักเงินจำนวน {number} จากบัญชีของ {player[1]} ยอดคงเหลือคือ {player[5]}'
         elif coin < number:
             message = f'ยอดเงินในบัญชีของ {player[1]} มีไม่พอหรับหักค่าปรับ ยอดเงิน ของ {player[1]} คือ {player[5]}'
-        await ctx.reply(message)
+        await ctx.reply(message, mention_author=False)
         await discord.DMChannel.send(member, f'ระบบได้หักเงินจำนวน '
                                              f'{number} จากบัญชีของคุณ : ยอดคงเหลือของคุณคือ {player[5]}')
 
