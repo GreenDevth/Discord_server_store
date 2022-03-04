@@ -56,6 +56,19 @@ def blue_count():
         print(e)
 
 
+def all_count():
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('SELECT COUNT(TEAM) FROM scum_wwii_event ORDER BY TEAM')
+        row = cur.fetchone()
+        while row is not None:
+            res = list(row)
+            return res[0]
+    except Error as e:
+        print(e)
+
+
 def all_team():
     try:
         conn = MySQLConnection(**db)
@@ -74,6 +87,10 @@ def count_color_team(team):
         return msg
     elif team == 'blue_check':
         data = blue_count()
+        msg = data
+        return msg
+    elif team == 'all_check':
+        data = all_count()
         msg = data
         return msg
 

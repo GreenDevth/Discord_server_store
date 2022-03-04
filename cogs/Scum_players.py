@@ -58,7 +58,7 @@ class ScumPlayers(commands.Cog):
     async def show_player(self, ctx):
 
         await ctx.send(
-            file=discord.File('./img/the_battle_check.png'),
+            file=discord.File('./img/the_battle.png'),
             components=[
                 [
                     Button(style=ButtonStyle.red, label='RED CHECK', emoji='⚔', custom_id='red_check'),
