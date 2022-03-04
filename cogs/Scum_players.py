@@ -46,7 +46,7 @@ class ScumPlayers(commands.Cog):
     @commands.Cog.listener()
     async def on_button_click(self, interaction):
         btn = interaction.component.custom_id
-        check_list = ["red_check", "blue_check"]
+        check_list = ["red_check", "blue_check", "all_check"]
         if btn in check_list:
             x = show_players(btn)
             y = count_color_team(btn)
@@ -62,14 +62,12 @@ class ScumPlayers(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.red, label='RED CHECK', emoji='⚔', custom_id='red_check'),
-                    Button(style=ButtonStyle.blue, label='BLUE CHECK', emoji='⚔', custom_id='blue_check')
+                    Button(style=ButtonStyle.blue, label='BLUE CHECK', emoji='⚔', custom_id='blue_check'),
+                    Button(style=ButtonStyle.gray, label='ALL TEAM', emoji='⚔', custom_id='all_check')
                 ]
             ]
         )
         await ctx.message.delete()
-        # print(type(x))
-        # await ctx.send(
-        # )
 
 
 def setup(bot):
