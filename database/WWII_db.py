@@ -73,7 +73,7 @@ def all_team():
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
-        cur.execute('SELECT DISCORD_NAME, TEAM FROM scum_wwii_event ORDER BY TEAM')
+        cur.execute('SELECT DISCORD_NAME, TEAM FROM scum_wwii_event ORDER BY EVENT_ID DESC ')
         row = cur.fetchall()
         return row
     except Error as e:

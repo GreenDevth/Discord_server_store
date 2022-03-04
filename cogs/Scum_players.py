@@ -53,6 +53,12 @@ class ScumPlayers(commands.Cog):
             msg = f'📃**แสดงรายชื่อผู้เข้าร่วมกิจกรรม**\n```{x}\n\n==========='\
                   f'================\nจำนวนสมาชิกทีม RED : {y} คน```'
             await interaction.respond(content=msg)
+        elif btn == 'all_check':
+            x = show_players(btn)
+            y = count_color_team(btn)
+            msg = f'📃**แสดงรายชื่อผู้เข้าร่วมกิจกรรม**\n```{x}\n\n===========' \
+                  f'================\nจำนวน ผู้ลงทะเบียนทั้งหมด : {y} คน```'
+            await interaction.respond(content=msg)
 
     @commands.command(name='show_players')
     async def show_player(self, ctx):
