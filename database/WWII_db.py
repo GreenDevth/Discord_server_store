@@ -60,7 +60,7 @@ def all_count():
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
-        cur.execute('SELECT COUNT(TEAM) FROM scum_wwii_event')
+        cur.execute('SELECT COUNT(*) FROM scum_wwii_event')
         row = cur.fetchone()
         while row is not None:
             res = list(row)
