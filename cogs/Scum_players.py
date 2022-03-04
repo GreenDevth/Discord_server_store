@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from database.Players import exp_update
 from database.Bank_db import plus_coins
-from database.WWII_db import show_players, count_color_team
+from database.WWII_db import show_players, count_color_team, all_count
 from discord_components import Button, ButtonStyle
 
 
@@ -55,7 +55,7 @@ class ScumPlayers(commands.Cog):
             await interaction.respond(content=msg)
         elif btn == 'all_check':
             x = show_players(btn)
-            y = count_color_team(btn)
+            y = all_count()
             msg = f'📃**แสดงรายชื่อผู้เข้าร่วมกิจกรรม**\n```{x}\n\n===========' \
                   f'================\nจำนวน ผู้ลงทะเบียนทั้งหมด : {y} คน```'
             await interaction.respond(content=msg)
