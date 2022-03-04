@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
-from database.Players import exp_update
-from database.Bank_db import plus_coins
+from database.Players import exp_update, players_info
+from database.Bank_db import plus_coins, minus_coins
 from database.WWII_db import show_players, count_color_team, all_count
 from discord_components import Button, ButtonStyle
 
@@ -31,6 +31,7 @@ class ScumPlayers(commands.Cog):
             await ctx.reply('Your Role are used this commands.')
 
     @commands.command(name='addcoins')
+    @commands.has_permissions(manage_roles=True)
     async def addcoins_command(self, ctx, member: discord.Member, number: int):
         coins = plus_coins(member.id, number)
         await ctx.reply(f'เติมเงินให้กับ {member.display_name} จำนวน {number} เป็นที่เรียบร้อย', mention_author=False)
@@ -38,6 +39,27 @@ class ScumPlayers(commands.Cog):
 
     @addcoins_command.error
     async def addcoins_command_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.reply('Your commands mission argument, Please verify again.', mention_author=False)
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.reply('Your Role are used this commands.')
+
+    @commands.command(name='removecoins')
+    @commands.has_permissions(manage_roles=True)
+    async def removecoins_commands(self, ctx, member: discord.Member, number: int):
+        message = None
+        player = players_info(member.id)
+        coin = player[5]
+        if number <= coin:
+            coins = minus_coins(member.id, number)
+            player = players_info(member.id)
+            message = f'ระบบได้หักเงินจำนวน {number} จากบัญชีของคุณ ยอดคงเหลือของคุณคือ {player[5]}'
+        elif coin < number:
+            message = f'ยอดเงินในบัญชีของ {player[1]} มีไม่พอหรับหักค่าปรับ ยอดเงิน ของ {player[1]} คือ {player[5]}'
+        await ctx.reply(message)
+
+    @removecoins_commands.error
+    async def removecoins_commands_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply('Your commands mission argument, Please verify again.', mention_author=False)
         if isinstance(error, commands.MissingPermissions):

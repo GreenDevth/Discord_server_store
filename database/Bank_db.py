@@ -34,3 +34,12 @@ def plus_coins(discord_id, coins):
     player = players_info(discord_id)
     coin = player[5]
     return coin
+
+
+def minus_coins(discord_id, coins):
+    player = players_info(discord_id)
+    coin = player[5]
+    coins_update(discord_id, coin - coins)
+    player = players_info(discord_id)
+    coin = player[5]
+    return coin
