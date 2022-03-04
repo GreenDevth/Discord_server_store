@@ -28,7 +28,7 @@ class ScumPlayers(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply('Your commands mission argument, Please verify again.', mention_author=False)
         if isinstance(error, commands.MissingPermissions):
-            await ctx.reply('Your Role are used this commands.')
+            await ctx.reply('Your Role are can not used this commands.')
 
     @commands.command(name='addcoins')
     @commands.has_permissions(manage_roles=True)
@@ -42,7 +42,7 @@ class ScumPlayers(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply('Your commands mission argument, Please verify again.', mention_author=False)
         if isinstance(error, commands.MissingPermissions):
-            await ctx.reply('Your Role are used this commands.')
+            await ctx.reply('Your Role are can not used this commands.')
 
     @commands.command(name='removecoins')
     @commands.has_permissions(manage_roles=True)
@@ -63,7 +63,7 @@ class ScumPlayers(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply('Your commands mission argument, Please verify again.', mention_author=False)
         if isinstance(error, commands.MissingPermissions):
-            await ctx.reply('Your Role are used this commands.')
+            await ctx.reply('Your Role are can not used this commands.')
 
     @commands.Cog.listener()
     async def on_button_click(self, interaction):
