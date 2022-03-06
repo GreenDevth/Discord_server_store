@@ -95,10 +95,11 @@ class FishingTools(commands.Cog):
             file=discord.File('./img/store/fishing_addon.png'),
             components=[
                 [
-                    Button(style=ButtonStyle.gray, label='FISHING LINE', custom_id='fishing_line'),
-                    Button(style=ButtonStyle.blue, label='FISHING REEL', custom_id='fishing_reel'),
-                    Button(style=ButtonStyle.green, label='FISHING HOOK', custom_id='fishing_hook'),
-                    Button(style=ButtonStyle.red, label='FLOATER', custom_id='fishing_floater')
+                    Button(style=ButtonStyle.gray, label='FISHING LINE SET', custom_id='fishing_line'),
+                    Button(style=ButtonStyle.blue, label='FISHING REEL SET', custom_id='fishing_reel')
+                ], [
+                    Button(style=ButtonStyle.green, label='FISHING HOOK SET', custom_id='fishing_hook'),
+                    Button(style=ButtonStyle.red, label='FLOATER SET', custom_id='fishing_floater')
                 ]
             ]
         )
