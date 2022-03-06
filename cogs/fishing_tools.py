@@ -2,8 +2,9 @@ import discord
 import random
 from discord.ext import commands
 from discord_components import Button, ButtonStyle
-from database.Store_db import check_queue, add_to_shoping_cart, in_order
+from database.Store_db import check_queue, add_to_shoping_cart, in_order, package_info
 from database.Players import players_info
+from database.Bank_db import coins_update
 
 
 class FishingTools(commands.Cog):
@@ -28,22 +29,29 @@ class FishingTools(commands.Cog):
         """ Fishing Pack """
 
         if btn in fishing_list:
+            package = package_info(btn)
             player = players_info(member.id)
-            package_name = "dailypack"
-            order = in_order(player[2])
-            add_to_shoping_cart(member.id, member.name, player[3], order_number, package_name)
-            if count == 0:
-                message = f"กรุณารอสักครู่ ระบบกำลังเตรียมจัดส่ง เซ็ตอุปกรณ์ตกปลา {btn} ให้คุณ"
-                checkout = '--run {}'.format(order_number)
-                await run_channel.send(
-                    f'{member.mention}\n'
-                    f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง อยู่ในคิวจัดส่ง {order}/{queue}```')
-                await run_channel.send(checkout)
-            else:
-                message = f"กรุณารอสักครู่ ระบบกำลังเตรียมจัดส่ง เซ็ตอุปกรณ์ตกปลา {btn} ให้คุณ"
-                await run_channel.send(
-                    f'{member.mention}\n'
-                    f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง อยู่ในคิวจัดส่ง {order}/{queue}```')
+            price = package[3]
+            coins = player[5]
+            if coins < price:
+                message = 'ยอดเงินของคุณไม่เพียงพอสำหรับสั่งซื้อ'
+            elif price <= coins:
+                coins_update(member.id, coins - price)
+                order = in_order(player[2])
+                add_to_shoping_cart(member.id, member.name, player[3], order_number, btn)
+                if count == 0:
+                    message = f"กรุณารอสักครู่ ระบบกำลังเตรียมจัดส่ง เซ็ตอุปกรณ์ตกปลา ให้คุณ"
+                    checkout = '--run {}'.format(order_number)
+                    await run_channel.send(
+                        f'{member.mention}\n'
+                        f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง อยู่ในคิวจัดส่ง {order}/{queue}```')
+                    await run_channel.send(checkout)
+                else:
+                    message = f"กรุณารอสักครู่ ระบบกำลังเตรียมจัดส่ง เซ็ตอุปกรณ์ตกปลา ให้คุณ"
+                    await run_channel.send(
+                        f'{member.mention}\n'
+                        f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง อยู่ในคิวจัดส่ง {order}/{queue}```')
+                message = message
         await interaction.respond(content=message)
 
     @commands.command(name='fishing_pack')

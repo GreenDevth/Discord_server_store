@@ -90,3 +90,16 @@ def get_queue(product_code):
             return data
     except Error as e:
         print(e)
+
+
+def package_info(package_name):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM scum_package WHERE package_name = %s', (package_name,))
+        row = cur.fetchall()
+        while row is not None:
+            for x in row:
+                return x
+    except Error as e:
+        print(e)
