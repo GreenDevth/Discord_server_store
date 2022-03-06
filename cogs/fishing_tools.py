@@ -16,7 +16,16 @@ class FishingTools(commands.Cog):
     async def on_button_click(self, interaction):
         member = interaction.author
         btn = interaction.component.custom_id
-        fishing_list = ["fishing_gray_set", "fishing_blue_set", "fishing_green_set", "fishing_red_set"]
+        fishing_list = [
+            "fishing_gray_set",
+            "fishing_blue_set",
+            "fishing_green_set",
+            "fishing_red_set",
+            "fishing_hook",
+            "fishing_reel",
+            "fishing_line",
+            "fishing_floater"
+        ]
         run_channel = self.bot.get_channel(927796274676260944)
         cmd_channel = self.bot.get_channel(925559937323659274)
         code = random.randint(9, 99999)
@@ -76,6 +85,20 @@ class FishingTools(commands.Cog):
                     Button(style=ButtonStyle.blue, label='BLUE SET', custom_id='fishing_blue_set'),
                     Button(style=ButtonStyle.green, label='GREEN SET', custom_id='fishing_green_set'),
                     Button(style=ButtonStyle.red, label='RED SET', custom_id='fishing_red_set')
+                ]
+            ]
+        )
+
+    @commands.command(name='fishing_addon')
+    async def fishing_addon(self, ctx):
+        await ctx.send(
+            file=discord.File('./img/store/fishing_addon.png'),
+            components=[
+                [
+                    Button(style=ButtonStyle.gray, label='LINE', custom_id='fishing_line'),
+                    Button(style=ButtonStyle.blue, label='REEL', custom_id='fishing_reel'),
+                    Button(style=ButtonStyle.green, label='HOOK', custom_id='fishing_hook'),
+                    Button(style=ButtonStyle.red, label='FLOATER', custom_id='fishing_floater')
                 ]
             ]
         )
