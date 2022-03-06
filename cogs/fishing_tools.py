@@ -95,9 +95,9 @@ class FishingTools(commands.Cog):
             file=discord.File('./img/store/fishing_addon.png'),
             components=[
                 [
-                    Button(style=ButtonStyle.gray, label='เซ็ตเอ็น 4 ขนาด', custom_id='fishing_line'),
+                    Button(style=ButtonStyle.gray, label='เซ็ตเอ็น', custom_id='fishing_line'),
                     Button(style=ButtonStyle.blue, label='รอกตกปลาชนิดโปร', custom_id='fishing_reel'),
-                    Button(style=ButtonStyle.green, label='เบ็ดตกปลา 4 ขนาด', custom_id='fishing_hook'),
+                    Button(style=ButtonStyle.green, label='เบ็ดตกปลา', custom_id='fishing_hook'),
                     Button(style=ButtonStyle.red, label='ทุ่น', custom_id='fishing_floater')
                 ]
             ]
