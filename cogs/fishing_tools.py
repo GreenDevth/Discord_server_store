@@ -40,15 +40,19 @@ class FishingTools(commands.Cog):
                 order = in_order(player[2])
                 add_to_shoping_cart(member.id, member.name, player[3], order_number, btn)
                 if count == 0:
+                    count = check_queue()
+                    queue = check_queue()
                     message = f"กรุณารอสักครู่ ระบบกำลังเตรียมจัดส่ง เซ็ตอุปกรณ์ตกปลา ให้คุณ"
                     checkout = '--run {}'.format(order_number)
-                    await run_channel.send(
+                    await cmd_channel.send(
                         f'{member.mention}\n'
                         f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง อยู่ในคิวจัดส่ง {order}/{queue}```')
                     await run_channel.send(checkout)
                 else:
+                    count = check_queue()
+                    queue = check_queue()
                     message = f"กรุณารอสักครู่ ระบบกำลังเตรียมจัดส่ง เซ็ตอุปกรณ์ตกปลา ให้คุณ"
-                    await run_channel.send(
+                    await cmd_channel.send(
                         f'{member.mention}\n'
                         f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง อยู่ในคิวจัดส่ง {order}/{queue}```')
                 message = message
