@@ -57,23 +57,31 @@ class FishingTools(commands.Cog):
                         count = check_queue()
                         queue = check_queue()
                         message = f"กรุณารอสักครู่ ระบบกำลังเตรียมจัดส่ง เซ็ตอุปกรณ์ตกปลา ให้คุณ"
+                        await interaction.respond(content=message)
                         checkout = '--run {}'.format(order_number)
                         await cmd_channel.send(
                             f'{member.mention}\n'
                             f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง'
                             f' จำนวนคิวจัดส่ง {order}/{queue}```')
                         await run_channel.send(checkout)
+                        return
                     else:
                         count = check_queue()
                         queue = check_queue()
                         message = f"กรุณารอสักครู่ ระบบกำลังเตรียมจัดส่ง เซ็ตอุปกรณ์ตกปลา ให้คุณ"
+                        await interaction.respond(content=message)
                         await cmd_channel.send(
                             f'{member.mention}\n'
                             f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง '
                             f'จำนวนคิวจัดส่ง {order}/{queue}```')
+                        return
             elif time <= shop_open:
                 message = 'Drone is still unavailable : the shop has been closed, Shop open is 18:00 - 24:00'
-        await interaction.respond(content=message)
+                await interaction.respond(content=message)
+                return
+            return
+        return
+
 
     @commands.command(name='fishing_pack')
     async def fishing_pack(self, ctx):
