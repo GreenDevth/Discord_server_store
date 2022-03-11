@@ -16,6 +16,12 @@ def listpacks(pack):
     except Error as e:
         print(e)
 
+def checkout(discord_id):
+    conn = MySQLConnection(**db)
+    cur = conn.cursor()
+    cur.execute('SELECT COUNT(order_number) FROM scum_shopping_cart WHERE discord_id = %s', (discord_id,))
+    count = cur.fetchone()
+    
 
 class Bayonet(commands.Cog):
     def __init__(self, bot):
@@ -32,7 +38,7 @@ class Bayonet(commands.Cog):
                     [
                         Button(style=ButtonStyle.green, label=f'BUY NOW', emoji='🔪', custom_id=f'{x[0]}'),
                         Button(style=ButtonStyle.blue, label='ADD TO CART', emoji='🛒', custom_id=f'{x[2]}'),
-                        Button(style=ButtonStyle.red, label='CHECKOUT', emoji='💳', custom_id=f'checkout{x[0]}')
+                        Button(style=ButtonStyle.red, label='CHECKOUT', emoji='💳', custom_id=f'checkout_{x[0]}')
                     ]
                 ]
             )
