@@ -6,11 +6,11 @@ from database.db_config import read_db_config
 db = read_db_config()
 
 
-def listpacks():
+def listpacks(pack):
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
-        cur.execute('select * from scum_items order by item_id DESC ')
+        cur.execute('select * from scum_items where pack = %s order by item_id', (pack,))
         row = cur.fetchall()
         return row
     except Error as e:
@@ -23,7 +23,10 @@ class Bayonet(commands.Cog):
 
     @commands.command(name='listpack')
     async def listpack_command(self, ctx, arg: str):
-        pack = listpacks()
+        pack = listpacks(arg)
 
         for x in pack:
-            await ctx.send(x)
+            await ctx.send(
+                f'{x[1]}',
+                components=Button(style=ButtonStyle.green, label='BUY', emoji='🔪', custom_id=f'{x[0]}')
+            )
