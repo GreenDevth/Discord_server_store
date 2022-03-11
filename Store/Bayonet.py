@@ -58,7 +58,6 @@ class Bayonet(commands.Cog):
         member = interaction.author
         btn = interaction.component.custom_id
 
-        if btn:
-            if btn.startswith('checkout_'):
-                print(btn.startswith('checkout_'))
-                message = await interaction.respond(content=f'{member.name} is click {btn}')
+        if btn.startswith('checkout_'):
+            print(btn.startswith('checkout_'))
+            message = await interaction.respond(content=f'{member.name} is click {btn}')
