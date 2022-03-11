@@ -27,6 +27,6 @@ class Bayonet(commands.Cog):
 
         for x in pack:
             await ctx.send(
-                f'{x[1]}',
+                f'{x[6]}',
                 components=[Button(style=ButtonStyle.green, label='BUY', emoji='🔪', custom_id=f'{x[0]}')]
             )
