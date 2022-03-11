@@ -60,4 +60,5 @@ class Bayonet(commands.Cog):
 
         if btn:
             if btn.startswith('checkout_'):
+                print(btn.startswith('checkout_'))
                 message = await interaction.respond(content=f'{member.name} is click {btn}')
