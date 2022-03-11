@@ -16,12 +16,22 @@ def listpacks(pack):
     except Error as e:
         print(e)
 
+
 def checkout(discord_id):
-    conn = MySQLConnection(**db)
-    cur = conn.cursor()
-    cur.execute('SELECT COUNT(order_number) FROM scum_shopping_cart WHERE discord_id = %s', (discord_id,))
-    count = cur.fetchone()
-    
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('SELECT COUNT(order_number) FROM scum_shopping_cart WHERE discord_id = %s', (discord_id,))
+        count = cur.fetchone()
+        if count == 1:
+            cur.execute('SELECT order_number FROM scum_shopping_cart WHERE discord_id = %s', (discord_id,))
+            row = cur.fetchone()
+            while row is not None:
+                res = list(row)
+                return res[0]
+    except Error as e:
+        print(e)
+
 
 class Bayonet(commands.Cog):
     def __init__(self, bot):
@@ -49,4 +59,5 @@ class Bayonet(commands.Cog):
         btn = interaction.component.custom_id
 
         if btn:
-            message = await interaction.respond(content=f'{member.name} is click {btn}')
+            if btn.startwith('checkout_'):
+                message = await interaction.respond(content=f'{member.name} is click {btn}')
