@@ -30,7 +30,7 @@ class Bayonet(commands.Cog):
                 f'{x[8]}',
                 components=[
                     [
-                        Button(style=ButtonStyle.green, label=f'BUY {x[1]}', emoji='🔪', custom_id=f'{x[0]}'),
+                        Button(style=ButtonStyle.green, label=f'BUY THIS ITEM', emoji='🔪', custom_id=f'{x[0]}'),
                         Button(style=ButtonStyle.blue, label='ADD TO CART', emoji='🛒', custom_id=f'{x[2]}'),
                         Button(style=ButtonStyle.red, label='CHECKOUT', emoji='💳', custom_id=f'checkout{x[0]}')
                     ]
