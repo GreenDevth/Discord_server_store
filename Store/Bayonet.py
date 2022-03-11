@@ -59,5 +59,5 @@ class Bayonet(commands.Cog):
         btn = interaction.component.custom_id
 
         if btn:
-            if btn.startwith('checkout_'):
+            if btn.startswith('checkout_'):
                 message = await interaction.respond(content=f'{member.name} is click {btn}')
