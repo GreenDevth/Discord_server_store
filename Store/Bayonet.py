@@ -137,10 +137,10 @@ class Bayonet(commands.Cog):
             message = 'Drone is still unavailable : The shop is open from 18:00 to 24:00.'
 
         if btn == 'add_to_cart':
-            message = 'Add to shopping cart with order number #{}'.format(code)
+            message = 'This command not available'
 
         if btn == 'checkout':
-            message = 'Check shopping cart list'
+            message = 'This command not available'
 
         await interaction.respond(content=message, ephemeral=True)
         return False
