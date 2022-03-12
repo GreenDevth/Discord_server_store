@@ -30,15 +30,15 @@ def check_queue():
         print(e)
 
 
-def add_to_shoping_cart(discord_id, discord_name, steam_id, order_number, package_name):
+def add_to_shoping_cart(discord_id, discord_name, steam_id, order_number, itemid):
     conn = None
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
         cur.execute(
-            "INSERT INTO scum_shopping_cart(discord_id, discord_name, steam_id, order_number, package_name) "
+            "INSERT INTO scum_shopping_cart(discord_id, discord_name, steam_id, order_number, item_id) "
             "VALUES (%s,%s,%s,%s,%s)",
-            (discord_id, discord_name, steam_id, order_number, package_name))
+            (discord_id, discord_name, steam_id, order_number, itemid))
         conn.commit()
         cur.close()
         return False
@@ -65,11 +65,11 @@ def delete_row():
             conn.close()
 
 
-def get_package(pack_name):
+def get_package(itemid):
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
-        cur.execute('SELECT package_data FROM scum_package WHERE package_name = %s', (pack_name,))
+        cur.execute('SELECT package_data FROM scum_package WHERE package_name = %s', (itemid,))
         row = cur.fetchone()
         while row is not None:
             data = list(row)
@@ -82,7 +82,7 @@ def get_queue(product_code):
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
-        cur.execute('SELECT steam_id, package_name FROM scum_shopping_cart WHERE order_number = %s',
+        cur.execute('SELECT steam_id, item_id FROM scum_shopping_cart WHERE order_number = %s',
                     (product_code,))
         row = cur.fetchone()
         while row is not None:
@@ -92,11 +92,11 @@ def get_queue(product_code):
         print(e)
 
 
-def package_info(package_name):
+def package_info(itemid):
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
-        cur.execute('SELECT * FROM scum_package WHERE package_name = %s', (package_name,))
+        cur.execute('SELECT * FROM scum_items WHERE item_id = %s', (itemid,))
         row = cur.fetchall()
         while row is not None:
             for x in row:
