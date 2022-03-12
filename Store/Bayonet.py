@@ -133,14 +133,17 @@ class Bayonet(commands.Cog):
                         print('send information without run command')
                 return
 
+            if btn == 'add_to_cart':
+                message = 'This command not available'
+                await interaction.respond(content=message, ephemeral=True)
+                return
+
+            if btn == 'checkout':
+                message = 'This command not available'
+                await interaction.respond(content=message, ephemeral=True)
+                return
+
         elif time <= shop_open:
             message = 'Drone is still unavailable : The shop is open from 18:00 to 24:00.'
 
-        if btn == 'add_to_cart':
-            message = 'This command not available'
-
-        if btn == 'checkout':
-            message = 'This command not available'
-
-        await interaction.respond(content=message, ephemeral=True)
         return False
