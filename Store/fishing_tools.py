@@ -75,6 +75,8 @@ class FishingTools(commands.Cog):
             elif time <= shop_open:
                 message = 'Drone is still unavailable : the shop has been closed, Shop open is 18:00 - 24:00'
                 await interaction.respond(content=message)
+                return
+            return
 
     @commands.command(name='fishing_pack')
     async def fishing_pack(self, ctx):
@@ -103,5 +105,3 @@ class FishingTools(commands.Cog):
                 ]
             ]
         )
-
-
