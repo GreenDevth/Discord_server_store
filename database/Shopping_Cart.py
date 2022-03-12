@@ -1,6 +1,18 @@
 from database.Players import *
 
 
+def listitem(item):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM scum_items WHERE commands = %s', (item,))
+        row = cur.fetchone()
+        while row is not None:
+            return row
+    except Error as e:
+        print(e)
+
+
 def listpacks(pack):
     """ Run list product to discord channel by listpack commands """
     try:
