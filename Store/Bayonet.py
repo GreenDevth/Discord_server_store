@@ -145,5 +145,5 @@ class Bayonet(commands.Cog):
 
         elif time <= shop_open:
             message = 'Drone is still unavailable : The shop is open from 18:00 to 24:00.'
-
+            await interaction.respond(content=message)
         return False
