@@ -91,7 +91,7 @@ class Bayonet(commands.Cog):
         message = None
         now = datetime.now()
         time = now.strftime("%H:%M:%S")
-        shop_open = "18:00:00"
+        shop_open = "10:00:00"
         if shop_open <= time:
             if btn in btn_ist:
                 print(btn)
@@ -101,7 +101,7 @@ class Bayonet(commands.Cog):
                 coins = players_info(member.id)[5]
                 now = datetime.now()
                 time = now.strftime("%H:%M:%S")
-                shop_open = "18:00:00"
+                shop_open = "10:00:00"
                 if coins < price:
                     message = '⚠ : ยอดเงินของคุณไม่เพียงพอสำหรับสั่งซื้อ' \
                               ' ยอดเงินของคุณทั้งหมดคือ ``${:,d}``'.format(coins)
@@ -144,6 +144,6 @@ class Bayonet(commands.Cog):
                 return
 
         elif time <= shop_open:
-            message = 'Drone is still unavailable : The shop is open from 18:00 to 24:00.'
+            message = 'Drone is still unavailable : The shop is open from 10:00 to 24:00.'
             await interaction.respond(content=message)
         return False
