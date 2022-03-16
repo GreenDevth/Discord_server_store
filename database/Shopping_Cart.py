@@ -72,3 +72,16 @@ def get_title(itemid):
             return res[0]
     except Error as e:
         print(e)
+
+
+def get_item_id(command):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('SELECT item_id FROM scum_items WHERE commands = %s', (command,))
+        row = cur.fetchone()
+        while row is not None:
+            res = list(row)
+            return res[0]
+    except Error as e:
+        print(e)
