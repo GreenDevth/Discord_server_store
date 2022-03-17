@@ -7,7 +7,7 @@ from discord_components import Button, ButtonStyle
 
 from database.Bank_db import coins_update
 from database.Players import players_info
-from database.Shopping_Cart import listpacks, get_price, item_id, get_title, listitem
+from database.Shopping_Cart import listpacks, get_price, item_id, get_title, listitem, listcate
 from database.Store_db import in_order, check_queue, add_to_shoping_cart
 
 
@@ -39,6 +39,38 @@ class Bayonet(commands.Cog):
 
     @listitem_command.error
     async def listitem_command_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.reply('You can not use this command', mention_author=False)
+
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.reply('Mission required argument : {}'.format(error.param))
+
+    @commands.command(name='listcate')
+    @commands.has_permissions(manage_roles=True)
+    async def listcate_command(self, ctx, arg: str):
+        cate = listcate(arg)
+        for x in cate:
+            embed = discord.Embed(
+                title='{}'.format(x[1])
+            )
+            embed.set_image(url=x[8])
+            embed.add_field(name='VALUE', value='${:,d}'.format(x[5]))
+            embed.add_field(name='COMMAND', value='$buy {}'.format(x[2]))
+            embed.add_field(name='COMMAND CHANNEL', value='<#925559937323659274>')
+            embed.add_field(name='DESCRIPTION', value='{}'.format(x[3]), inline=False)
+            await ctx.send(
+                embed=embed,
+                components=[
+                    [
+                        Button(style=ButtonStyle.green, label=f'BUY NOW', emoji='💵', custom_id=f'{x[0]}'),
+                        Button(style=ButtonStyle.blue, label='ADD TO CART', emoji='🛒', custom_id='add_to_cart'),
+                        Button(style=ButtonStyle.red, label='CHECKOUT', emoji='💳', custom_id='checkout')
+                    ]
+                ]
+            )
+
+    @listcate_command.error
+    async def listcate_command_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.reply('You can not use this command', mention_author=False)
 
