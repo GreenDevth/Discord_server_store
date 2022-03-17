@@ -85,3 +85,31 @@ def get_item_id(command):
             return res[0]
     except Error as e:
         print(e)
+
+
+def package_info(itemid):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM scum_items WHERE item_id = %s', (itemid,))
+        row = cur.fetchall()
+        while row is not None:
+            for x in row:
+                return x
+    except Error as e:
+        print(e)
+        return None
+
+
+def in_stock(itemid):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('SELECT in_stock FROM scum_items WHERE item_id = %s', (itemid,))
+        row = cur.fetchone()
+        while row is not None:
+            res = list(row)
+            return res[0]
+    except Error as e:
+        print(e)
+        return None

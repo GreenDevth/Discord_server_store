@@ -103,3 +103,38 @@ def package_info(itemid):
                 return x
     except Error as e:
         print(e)
+
+
+def update_stock(itemid, total):
+    conn = None
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('UPDATE scum_items SET in_stock = %s WHERE item_id = %s', (total, itemid,))
+        conn.commit()
+        cur.close()
+    except Error as e:
+        print(e)
+        return None
+    finally:
+        if conn.is_connected():
+            conn.close()
+            return None
+
+
+def reset_stock():
+    conn = None
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('UPDATE scum_items SET in_stock = 5 WHERE in_stock = 0')
+        conn.commit()
+        cur.close()
+        return None
+    except Error as e:
+        print(e)
+        return None
+    finally:
+        if conn.is_connected():
+            conn.close()
+            return None

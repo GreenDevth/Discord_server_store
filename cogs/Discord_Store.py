@@ -1,5 +1,5 @@
 from discord.ext import commands
-from Store.Bayonet import Bayonet
+from Store.ServerStore import ServerStore
 import random
 from datetime import datetime
 
@@ -12,6 +12,12 @@ from database.Store_db import *
 class DiscordStore(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command(name='clear')
+    @commands.has_permissions(manage_roles=True)
+    async def clear_command(self, ctx, number: int):
+        await ctx.reply('delete all message', mention_author=False)
+        await ctx.channel.purge(limit=number)
 
     @commands.command(name='buy')
     async def buy_command(self, ctx, arg: str):
@@ -79,4 +85,5 @@ class DiscordStore(commands.Cog):
 
 def setup(bot):
     bot.add_cog(DiscordStore(bot))
-    bot.add_cog(Bayonet(bot))
+    bot.add_cog(ServerStore(bot))
+    # bot.add_cog(Bayonet(bot))
