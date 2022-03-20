@@ -145,7 +145,7 @@ class ServerStore(commands.Cog):
             stock = in_stock(buy_btn)
             if stock != 0:
                 level = item_level(buy_btn)
-                if player_lavel > level:
+                if level <= player_lavel:
                     if buy_btn in btn_ist:
                         price = get_price(buy_btn)
                         title = get_title(buy_btn)
