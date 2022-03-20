@@ -138,3 +138,17 @@ def reset_stock():
         if conn.is_connected():
             conn.close()
             return None
+
+
+def item_level(itemid):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('SELECT only_level FROM scum_items WHERE item_id = %s', (itemid,))
+        row = cur.fetchone()
+        while row is not None:
+            res = list(row)
+            return res[0]
+    except Error as e:
+        print(e)
+        return None

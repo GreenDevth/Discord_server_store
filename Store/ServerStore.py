@@ -138,46 +138,56 @@ class ServerStore(commands.Cog):
         message = None
         now = datetime.now()
         time = now.strftime("%H:%M:%S")
-        shop_open = "10:00:00"
-
+        shop_open = "00:00:00"
+        level = item_level(buy_btn)
+        player_lavel = players_info(member.id)[6]
         if shop_open <= time:
             stock = in_stock(buy_btn)
             if stock != 0:
-                if buy_btn in btn_ist:
-                    price = get_price(buy_btn)
-                    title = get_title(buy_btn)
-                    coins = players_info(member.id)[5]
-                    if coins < price:
-                        message = '⚠ : ยอดเงินของคุณไม่เพียงพอสำหรับสั่งซื้อ' \
-                                  ' ยอดเงินของคุณทั้งหมดคือ ``${:,d}``'.format(coins)
-                        await interaction.respond(content=message)
-                        return
-                    elif price <= coins:
-                        message = f"กรุณารอสักครู่ ระบบกำลังเตรียมจัดส่ง **{title}** ให้คุณ"
-                        await interaction.respond(content=message)
-                        update_stock(buy_btn, stock - 1)
-                        coins_update(member.id, coins - price)
-                        order = in_order(member.id)  # Count order_number for scum_shopping_cart by discord id return
-                        # 0 or 1
-                        add_to_shoping_cart(member.id, member.name, players_info(member.id)[3], order_number, buy_btn)
-                        if count == 0:
-                            queue = check_queue()
-                            checkout = '--run {}'.format(order_number)
-                            await cmd_channel.send(
-                                f'{member.mention}\n'
-                                f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง'
-                                f' จำนวนคิวจัดส่ง {order}/{queue}```')
-                            await run_channel.send(checkout)
-                            print('run command to send package to player')
+                level = item_level(buy_btn)
+                if player_lavel > level:
+                    if buy_btn in btn_ist:
+                        price = get_price(buy_btn)
+                        title = get_title(buy_btn)
+                        coins = players_info(member.id)[5]
+                        if coins < price:
+                            message = '⚠ : ยอดเงินของคุณไม่เพียงพอสำหรับสั่งซื้อ' \
+                                      ' ยอดเงินของคุณทั้งหมดคือ ``${:,d}``'.format(coins)
+                            await interaction.respond(content=message)
                             return
-                        else:
-                            queue = check_queue()
-                            await cmd_channel.send(
-                                f'{member.mention}\n'
-                                f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง'
-                                f' จำนวนคิวจัดส่ง {order}/{queue}```', mention_author=False)
-                            print('send information without run command')
-                            return
+                        elif price <= coins:
+                            message = f"กรุณารอสักครู่ ระบบกำลังเตรียมจัดส่ง **{title}** ให้คุณ"
+                            await interaction.respond(content=message)
+                            update_stock(buy_btn, stock - 1)
+                            coins_update(member.id, coins - price)
+                            order = in_order(member.id)
+                            add_to_shoping_cart(
+                                member.id, member.name,
+                                players_info(member.id)[3],
+                                order_number, buy_btn
+                            )
+                            if count == 0:
+                                queue = check_queue()
+                                checkout = '--run {}'.format(order_number)
+                                await cmd_channel.send(
+                                    f'{member.mention}\n'
+                                    f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง'
+                                    f' จำนวนคิวจัดส่ง {order}/{queue}```')
+                                await run_channel.send(checkout)
+                                print('run command to send package to player')
+                                return
+                            else:
+                                queue = check_queue()
+                                await cmd_channel.send(
+                                    f'{member.mention}\n'
+                                    f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง'
+                                    f' จำนวนคิวจัดส่ง {order}/{queue}```', mention_author=False)
+                                print('send information without run command')
+                                return
+                else:
+                    await interaction.respond(content='⚠ **Level** ของคุณไม่เพียงพอสำหรับคำสั่งซื้อนี้')
+                    return
+
             elif stock == 0:
                 await interaction.respond(content='❌ Out of Stock')
                 return
