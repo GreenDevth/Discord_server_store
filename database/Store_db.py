@@ -171,7 +171,7 @@ def check_stock(by_pack):
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
-        cur.execute('SELECT title, commands, in_stock, price FROM scum_items WHERE pack = %s', (by_pack,))
+        cur.execute('SELECT title, commands, in_stock, price, img FROM scum_items WHERE pack = %s', (by_pack,))
         row = cur.fetchall()
         while row is not None:
             return row

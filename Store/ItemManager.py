@@ -1,3 +1,5 @@
+import asyncio
+
 import discord
 from discord.ext import commands
 from database.Store_db import check_stock, check_pack, list_cate, list_pack
@@ -14,25 +16,31 @@ class ItemsManager(commands.Cog):
                 await ctx.reply(f'ไม่พบข้อมูล {arg} ในฐานข้อมูล โปรดตรวจสอบความถูกต้อง..', mention_author=False)
             else:
                 packs = check_stock(arg)
+
                 embed = discord.Embed(
                     title=f'รายการสินค้าประเภท {arg.upper()}',
                     colour=discord.Colour.green()
                 )
                 for pack in packs:
                     embed.add_field(
-                        name=f"{pack[0]}",
-                        value=f"คงเหลือในสต๊อค : ```css\n{pack[2]}\n```",
+                        name="สินค้า",
+                        value=f'```bash\n{pack[0]}\n```',
                         inline=False
                     )
                     embed.add_field(
+                        name="คงเหลือ",
+                        value=f"```css\n{pack[2]}\n```"
+                    )
+                    embed.add_field(
                         name='ราคาปัจจุบัน',
-                        value=f"```css\n{pack[3]}\n```",
+                        value=f"```css\n{pack[3]}\n```"
                     )
 
                 await ctx.reply(
                     embed=embed,
                     mention_author=False
                 )
+
         elif ctx.author.guild_permissions.administrator:
             await ctx.reply('arg')
         else:
