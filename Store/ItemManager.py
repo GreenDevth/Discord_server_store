@@ -2,7 +2,7 @@ import asyncio
 
 import discord
 from discord.ext import commands
-from database.Store_db import check_stock, check_pack, list_cate, list_pack
+from database.Store_db import check_stocks, check_pack, list_cate, list_pack
 
 
 class ItemsManager(commands.Cog):
@@ -15,7 +15,7 @@ class ItemsManager(commands.Cog):
             if check_pack(arg) == 0:
                 await ctx.reply(f'ไม่พบข้อมูล {arg} ในฐานข้อมูล โปรดตรวจสอบความถูกต้อง..', mention_author=False)
             else:
-                packs = check_stock(arg)
+                packs = check_stocks(arg)
 
                 embed = discord.Embed(
                     title=f'รายการสินค้าประเภท {arg.upper()}',
@@ -64,9 +64,19 @@ class ItemsManager(commands.Cog):
             embed.add_field(name='Category Name', value=f'```ini\n{cate[0]}\n```')
         await ctx.send(embed=embed)
 
+    @list_cate_commands.error
+    async def list_cate_commands_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.reply('Missing a required argument {}'.format(error.param), mention_author=False)
+
     @commands.command(name='list_pack')
     @commands.has_permissions(manage_roles=True)
     async def list_pack_commands(self, ctx, arg: str):
         packs = list_pack(arg)
         for pack in packs:
             await ctx.send(f"Your pack name is ```ini\n{pack[0]}\n```")
+
+    @list_pack_commands.error
+    async def list_pack_commands_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.reply('Missing a required argument {}'.format(error.param), mention_author=False)
