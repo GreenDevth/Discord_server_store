@@ -1,5 +1,6 @@
 from discord.ext import commands
 from Store.ServerStore import ServerStore
+from Store.ItemManager import ItemsManager
 import random
 from datetime import datetime
 
@@ -86,4 +87,5 @@ class DiscordStore(commands.Cog):
 def setup(bot):
     bot.add_cog(DiscordStore(bot))
     bot.add_cog(ServerStore(bot))
+    bot.add_cog(ItemsManager(bot))
     # bot.add_cog(Bayonet(bot))
