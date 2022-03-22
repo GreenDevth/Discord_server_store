@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from database.Store_db import check_stock, check_pack
+from database.Store_db import check_stock, check_pack, list_cate, list_pack
 
 
 class ItemsManager(commands.Cog):
@@ -24,6 +24,10 @@ class ItemsManager(commands.Cog):
                         value=f"คงเหลือในสต๊อค : ```css\n{pack[2]}\n```",
                         inline=False
                     )
+                    embed.add_field(
+                        name='ราคาปัจจุบัน',
+                        value=f"```css\n{pack[3]}\n```",
+                    )
 
                 await ctx.reply(
                     embed=embed,
@@ -38,3 +42,23 @@ class ItemsManager(commands.Cog):
     async def check_command_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply('Missing a required argument {}'.format(error.param), mention_author=False)
+
+    @commands.command(name='list_cate')
+    @commands.has_permissions(manage_roles=True)
+    async def list_cate_commands(self, ctx):
+        cates = list_cate()
+        embed = discord.Embed(
+            title="Item list by Category",
+            description='Coppy Category name and type $list_pack your category name and enter for list item pack',
+            colour=discord.Colour.green(),
+        )
+        for cate in cates:
+            embed.add_field(name='Category Name', value=f'```ini\n{cate[0]}\n```')
+        await ctx.send(embed=embed)
+
+    @commands.command(name='list_pack')
+    @commands.has_permissions(manage_roles=True)
+    async def list_pack_commands(self, ctx, arg: str):
+        packs = list_pack(arg)
+        for pack in packs:
+            await ctx.send(f"Your pack name is ```ini\n{pack[0]}\n```")

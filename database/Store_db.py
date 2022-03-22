@@ -171,9 +171,33 @@ def check_stock(by_pack):
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
-        cur.execute('SELECT title, commands, in_stock FROM scum_items WHERE pack = %s', (by_pack,))
+        cur.execute('SELECT title, commands, in_stock, price FROM scum_items WHERE pack = %s', (by_pack,))
         row = cur.fetchall()
         while row is not None:
             return row
+    except Error as e:
+        print(e)
+
+
+def list_cate():
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('SELECT DISTINCT cate FROM scum_items ORDER BY item_id')
+        row = cur.fetchall()
+        while row is not None:
+            res = list(row)
+            return res
+    except Error as e:
+        print(e)
+
+
+def list_pack(cate_name):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('SELECT DISTINCT pack FROM scum_items WHERE cate = %s ORDER BY item_id', (cate_name,))
+        row = cur.fetchall()
+        return row
     except Error as e:
         print(e)
