@@ -10,6 +10,10 @@ class ItemsManager(commands.Cog):
         if ctx.channel.id != 925559937323659274:
             await ctx.reply('คุณควรใช้งานคำสั่งนี้ที่ห้อง <#925559937323659274>')
             return False
+        elif ctx.author.guild_permissions.administrator:
+            await ctx.reply('arg')
+        else:
+            await ctx.reply('arg')
 
     @check_command.error
     async def check_command_error(self, ctx, error):
