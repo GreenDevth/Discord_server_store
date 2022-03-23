@@ -158,6 +158,19 @@ def check_pack(pack_name):
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
+        cur.execute('select count(*) from scum_items where pack = %s', (pack_name,))
+        row = cur.fetchone()
+        while row is not None:
+            res = list(row)
+            return res[0]
+    except Error as e:
+        print(e)
+
+
+def check_cate(pack_name):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
         cur.execute('select count(*) from scum_items where cate = %s', (pack_name,))
         row = cur.fetchone()
         while row is not None:
@@ -213,3 +226,23 @@ def list_pack(cate_name):
         return row
     except Error as e:
         print(e)
+
+
+
+def update_stock():
+    conn = None
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('UPDATE scum_items SET in_stock=5 WHERE in_stock=0')
+        conn.commit()
+        print('All product stock is set to 5 items.')
+        cur.close()
+    except Error as e:
+        print(e)
+    finally:
+        if conn.is_connected():
+            conn.close()
+            msg = "All product stock is set to 5 items."
+            return msg.strip()
+
