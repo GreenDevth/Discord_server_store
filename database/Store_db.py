@@ -229,7 +229,7 @@ def list_pack(cate_name):
 
 
 
-def update_stock():
+def update_stocks():
     conn = None
     try:
         conn = MySQLConnection(**db)

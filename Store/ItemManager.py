@@ -3,7 +3,7 @@ import asyncio
 import discord
 from discord.ext import commands
 from numpy import isin
-from database.Store_db import check_stocks, check_pack, list_cate, list_pack, check_cate, check_stock, update_stock
+from database.Store_db import check_stocks, check_pack, list_cate, list_pack, check_cate, check_stock, update_stocks
 
 
 class ItemsManager(commands.Cog):
@@ -139,7 +139,7 @@ class ItemsManager(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def reset_stock(self, ctx, arg: str):
         if arg == "true":
-            update = update_stock()
+            update = update_stocks()
             await ctx.reply(f'{update}', mention_author=False)
     
     @reset_stock.error
