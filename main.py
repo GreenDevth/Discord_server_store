@@ -6,7 +6,7 @@ bot = commands.Bot(command_prefix='$')
 bot.remove_command('help')
 DiscordComponents(bot)
 
-token = get_token(13)  # old = 8 new = 12
+token = get_token(8)  # old = 8 new = 12
 
 
 @bot.event
