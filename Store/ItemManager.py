@@ -10,16 +10,16 @@ class ItemsManager(commands.Cog):
     def __int__(self, bot):
         self.bot = bot
 
-    @commands.group(name='check', invoke_without_command=True)
-    async def check_command_group(self, ctx):
-        embed=discord.Embed(
-            title='Command List for check items stock',
-            colour=discord.Colour.green(),
-        )
-        embed.add_field(name='Get category name', value='พิมพ์คำสั่ง\n```css\n$check cate vehicle\n```')
-        await ctx.send(
-            embed=embed
-        )
+    # @commands.group(name='check', invoke_without_command=True)
+    # async def check_command_group(self, ctx):
+    #     embed=discord.Embed(
+    #         title='Command List for check items stock',
+    #         colour=discord.Colour.green(),
+    #     )
+    #     embed.add_field(name='Get category name', value='พิมพ์คำสั่ง\n```css\n$check cate vehicle\n```')
+    #     await ctx.send(
+    #         embed=embed
+    #     )
 
     @commands.command(name='check_cate')
     async def check_command(self, ctx, arg: str):
