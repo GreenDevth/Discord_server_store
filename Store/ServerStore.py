@@ -185,7 +185,7 @@ class ServerStore(commands.Cog):
                                 print('send information without run command')
                                 return
                 else:
-                    await interaction.respond(content='⚠ **Level** ของคุณไม่เพียงพอสำหรับคำสั่งซื้อนี้')
+                    await interaction.respond(content='⚠ สินค้านี้สำหรับผู้เล่น **Level {}**'.format(level))
                     return
 
             elif stock == 0:
