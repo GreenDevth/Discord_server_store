@@ -127,7 +127,7 @@ def reset_stock():
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
-        cur.execute('UPDATE scum_items SET in_stock = 5 WHERE in_stock = 0')
+        cur.execute('UPDATE scum_items SET in_stock = 5 WHERE in_stock < 5')
         conn.commit()
         cur.close()
         return None
