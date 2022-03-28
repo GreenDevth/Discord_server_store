@@ -48,8 +48,8 @@ class ServerStore(commands.Cog):
                 components=[
                     [
                         Button(style=ButtonStyle.green, label=f'BUY NOW', emoji='💵', custom_id=f'{x[0]}'),
-                        Button(style=ButtonStyle.blue, label='ADD TO CART', emoji='🛒', disabled=True),
-                        Button(style=ButtonStyle.red, label='CHECKOUT', emoji='💳', disabled=True)
+                        Button(style=ButtonStyle.blue, label=f'ONLY LEVEL {x[10]}', emoji='🔐'),
+                        Button(style=ButtonStyle.red, label='PRICE ${:,d}'.format(x[5]), emoji='💳')
                     ]
                 ]
             )
@@ -78,8 +78,8 @@ class ServerStore(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label=f'BUY NOW', emoji='💵', custom_id=f'{x[0]}'),
-                    Button(style=ButtonStyle.blue, label='ADD TO CART', emoji='🛒', disabled=True),
-                    Button(style=ButtonStyle.red, label='CHECKOUT', emoji='💳', disabled=True)
+                    Button(style=ButtonStyle.blue, label=f'ONLY LEVEL {x[10]}', emoji='🔐'),
+                    Button(style=ButtonStyle.red, label='PRICE ${:,d}'.format(x[5]), emoji='💳')
                 ]
             ]
         )
@@ -110,8 +110,8 @@ class ServerStore(commands.Cog):
                 components=[
                     [
                         Button(style=ButtonStyle.green, label=f'BUY NOW', emoji='💵', custom_id=f'{x[0]}'),
-                        Button(style=ButtonStyle.blue, label='ADD TO CART', emoji='🛒', disabled=True),
-                        Button(style=ButtonStyle.red, label='CHECKOUT', emoji='💳', disabled=True)
+                        Button(style=ButtonStyle.blue, label=f'ONLY LEVEL {x[10]}', emoji='🔐'),
+                        Button(style=ButtonStyle.red, label='PRICE ${:,d}'.format(x[5]), emoji='💳')
                     ]
                 ]
             )
