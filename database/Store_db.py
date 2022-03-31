@@ -263,7 +263,19 @@ def update_item_cmd(cmd, amount):
             return False
 
 
+def check_cmd(cmd):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('select count(*) from scum_items where commands = %s', (cmd,))
+        row = cur.fetchall()
+        return row[0]
+    except Error as e:
+        print(e)
+
+
 def get_item_info_by_cmd(cmd):
+
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()

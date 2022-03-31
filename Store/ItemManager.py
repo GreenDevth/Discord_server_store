@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 
 from database.Store_db import check_stocks, check_pack, list_cate, list_pack, check_cate, check_stock, update_stocks, \
-    update_item_cmd, get_item_info_by_cmd
+    update_item_cmd, get_item_info_by_cmd, check_cmd
 
 
 class ItemsManager(commands.Cog):
@@ -156,20 +156,20 @@ class ItemsManager(commands.Cog):
 
     @commands.command(name='check_stock')
     async def check_stock(self, ctx, cmd: str):
-        item = get_item_info_by_cmd(cmd)
-        await ctx.reply(item)
-        # if item is not None:
-        #     embed = discord.Embed(
-        #         title=f'{item[1]}',
-        #         color=discord.Colour.green()
-        #     )
-        #     embed.set_image(url=f'{item[8]}')
-        #     embed.add_field(name="IN STOCK", value=f'```css\n{item[9]}\n```'),
-        #     embed.add_field(name="LEVEL REQUIRE", value=f'```css\n{item[10]}\n```')
-        #     embed.add_field(name="PRICE", value='```css\n${:,d}\n```'.format(item[5]))
-        #     await ctx.channel.send(embed=embed)
-        # elif item is None:
-        #     await ctx.reply(f"ไม่พบรายการสินค้า `` {cmd} `` ในระบบ", mention_author=False)
+        check = check_cmd(cmd)
+        if check != 0:
+            item = get_item_info_by_cmd(cmd)
+            embed = discord.Embed(
+                title=f'{item[1]}',
+                color=discord.Colour.green()
+            )
+            embed.set_image(url=f'{item[8]}')
+            embed.add_field(name="IN STOCK", value=f'```css\n{item[9]}\n```'),
+            embed.add_field(name="LEVEL REQUIRE", value=f'```css\n{item[10]}\n```')
+            embed.add_field(name="PRICE", value='```css\n${:,d}\n```'.format(item[5]))
+            await ctx.channel.send(embed=embed)
+        elif check == 0:
+            await ctx.reply(f"ไม่พบรายการสินค้า `` {cmd} `` ในระบบ", mention_author=False)
 
     @check_stock.error
     async def check_stock_error(self, ctx, error):
