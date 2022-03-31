@@ -142,9 +142,13 @@ class ItemsManager(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def fill_stock_command(self, ctx, cmd: str, amount: int):
         """ fill item stock by commands """
-        update_item_cmd(cmd, amount)
-        item = get_item_info_by_cmd(cmd)
-        await ctx.reply(f'Update stock for **{item[1]}** successfully.', mention_author=False)
+        check = check_cmd(cmd)[0]
+        if check != 0:
+            update_item_cmd(cmd, amount)
+            item = get_item_info_by_cmd(cmd)
+            await ctx.reply(f'Update stock for **{item[1]}** successfully.', mention_author=False)
+        elif check == 0:
+            await ctx.reply(f"ไม่พบรายการสินค้า `` {cmd} `` ในระบบ", mention_author=False)
 
     @fill_stock_command.error
     async def fill_stock_command_error(self, ctx, error):
@@ -157,7 +161,6 @@ class ItemsManager(commands.Cog):
     @commands.command(name='check_stock')
     async def check_stock(self, ctx, cmd: str):
         check = check_cmd(cmd)[0]
-        print(check)
         print(type(check))
         if check != 0:
             item = get_item_info_by_cmd(cmd)
