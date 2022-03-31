@@ -1,8 +1,6 @@
-import asyncio
-
 import discord
 from discord.ext import commands
-from numpy import isin
+
 from database.Store_db import check_stocks, check_pack, list_cate, list_pack, check_cate, check_stock, update_stocks, \
     update_item_cmd, get_item_info_by_cmd
 
@@ -10,17 +8,6 @@ from database.Store_db import check_stocks, check_pack, list_cate, list_pack, ch
 class ItemsManager(commands.Cog):
     def __int__(self, bot):
         self.bot = bot
-
-    # @commands.group(name='check', invoke_without_command=True)
-    # async def check_command_group(self, ctx):
-    #     embed=discord.Embed(
-    #         title='Command List for check items stock',
-    #         colour=discord.Colour.green(),
-    #     )
-    #     embed.add_field(name='Get category name', value='พิมพ์คำสั่ง\n```css\n$check cate vehicle\n```')
-    #     await ctx.send(
-    #         embed=embed
-    #     )
 
     @commands.command(name='check_cate')
     async def check_command(self, ctx, arg: str):
@@ -174,8 +161,9 @@ class ItemsManager(commands.Cog):
             title=f'{item[1]}',
             color=discord.Colour.green()
         )
-        embed.add_field(name="IN STOCK", value=f'{item[9]}'),
-        embed.add_field(name="LEVEL REQUIRE", value=f'{item[10]}')
+        embed.add_field(name="IN STOCK", value=f'```css\n{item[9]}\n```'),
+        embed.add_field(name="LEVEL REQUIRE", value=f'```css\n{item[10]}\n```')
+        embed.add_field(name="PRICE", value='```css\n${:,d}\n```'.format(item[5]))
         await ctx.channel.send(embed=embed)
 
     @check_stock.error
