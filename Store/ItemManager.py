@@ -157,15 +157,18 @@ class ItemsManager(commands.Cog):
     @commands.command(name='check_stock')
     async def check_stock(self, ctx, cmd: str):
         item = get_item_info_by_cmd(cmd)
-        embed = discord.Embed(
-            title=f'{item[1]}',
-            color=discord.Colour.green()
-        )
-        embed.set_image(url=f'{item[8]}')
-        embed.add_field(name="IN STOCK", value=f'```css\n{item[9]}\n```'),
-        embed.add_field(name="LEVEL REQUIRE", value=f'```css\n{item[10]}\n```')
-        embed.add_field(name="PRICE", value='```css\n${:,d}\n```'.format(item[5]))
-        await ctx.channel.send(embed=embed)
+        if item is not None:
+            embed = discord.Embed(
+                title=f'{item[1]}',
+                color=discord.Colour.green()
+            )
+            embed.set_image(url=f'{item[8]}')
+            embed.add_field(name="IN STOCK", value=f'```css\n{item[9]}\n```'),
+            embed.add_field(name="LEVEL REQUIRE", value=f'```css\n{item[10]}\n```')
+            embed.add_field(name="PRICE", value='```css\n${:,d}\n```'.format(item[5]))
+            await ctx.channel.send(embed=embed)
+        else:
+            await ctx.reply(f"ไม่พบรายการสินค้า `` {cmd} `` ในระบบ", mention_author=False)
 
     @check_stock.error
     async def check_stock_error(self, ctx, error):

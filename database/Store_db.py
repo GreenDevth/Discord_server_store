@@ -269,7 +269,8 @@ def get_item_info_by_cmd(cmd):
         cur = conn.cursor()
         cur.execute('select * from scum_items where commands=%s', (cmd,))
         row = cur.fetchall()
-        for x in row:
-            return x
+        while row is not None:
+            for x in row:
+                return x
     except Error as e:
         print(e)
