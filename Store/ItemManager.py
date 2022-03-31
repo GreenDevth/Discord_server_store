@@ -161,6 +161,7 @@ class ItemsManager(commands.Cog):
             title=f'{item[1]}',
             color=discord.Colour.green()
         )
+        embed.set_image(url=f'{item[8]}')
         embed.add_field(name="IN STOCK", value=f'```css\n{item[9]}\n```'),
         embed.add_field(name="LEVEL REQUIRE", value=f'```css\n{item[10]}\n```')
         embed.add_field(name="PRICE", value='```css\n${:,d}\n```'.format(item[5]))
