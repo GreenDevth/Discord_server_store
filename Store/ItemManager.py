@@ -3,7 +3,8 @@ import asyncio
 import discord
 from discord.ext import commands
 from numpy import isin
-from database.Store_db import check_stocks, check_pack, list_cate, list_pack, check_cate, check_stock, update_stocks
+from database.Store_db import check_stocks, check_pack, list_cate, list_pack, check_cate, check_stock, update_stocks, \
+    update_item_cmd, get_item_info_by_cmd
 
 
 class ItemsManager(commands.Cog):
@@ -141,12 +142,43 @@ class ItemsManager(commands.Cog):
         if arg == "true":
             update = update_stocks()
             await ctx.reply(f'{update}', mention_author=False)
-    
+
     @reset_stock.error
     async def reset_stock_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply('Missing a required argument {}'.format(error.param), mention_author=False)
-        
+
         if isinstance(error, commands.MissingPermissions):
             await ctx.reply('Only for Admin command!!!', mention_author=False)
 
+    @commands.command(name='fill')
+    @commands.has_permissions(manage_roles=True)
+    async def fill_stock_command(self, ctx, cmd: str, amount: int):
+        """ fill item stock by commands """
+        update_item_cmd(cmd, amount)
+        item = get_item_info_by_cmd(cmd)
+        await ctx.reply(f'Update stock for **{item[1]}** successfully.', mention_author=False)
+
+    @fill_stock_command.error
+    async def fill_stock_command_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.reply('Missing a required argument {}'.format(error.param), mention_author=False)
+
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.reply('Only for Admin command!!!', mention_author=False)
+
+    @commands.command(name='check_stock')
+    async def check_stock(self, ctx, cmd: str):
+        item = get_item_info_by_cmd(cmd)
+        embed = discord.Embed(
+            title=f'{item[1]}',
+            color=discord.Colour.green()
+        )
+        embed.add_field(name="IN STOCK", value=f'{item[9]}'),
+        embed.add_field(name="LEVEL REQUIRE", value=f'{item[10]}')
+        await ctx.channel.send(embed=embed)
+
+    @check_stock.error
+    async def check_stock_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.reply('Missing a required argument *item command*', mention_author=False)

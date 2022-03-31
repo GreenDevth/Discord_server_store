@@ -228,7 +228,6 @@ def list_pack(cate_name):
         print(e)
 
 
-
 def update_stocks():
     conn = None
     try:
@@ -246,3 +245,31 @@ def update_stocks():
             msg = "All product stock is set to 5 items."
             return msg.strip()
 
+
+def update_item_cmd(cmd, amount):
+    conn = None
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('update scum_items set in_stock = %s where commands = %s', (amount, cmd,))
+        conn.commit()
+        print('update item stock successfully...')
+        cur.close()
+    except Error as e:
+        print(e)
+    finally:
+        if conn.is_connected():
+            conn.close()
+            return False
+
+
+def get_item_info_by_cmd(cmd):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        cur.execute('select * from scum_items where commands=%s', (cmd,))
+        row = cur.fetchall()
+        for x in row:
+            return x
+    except Error as e:
+        print(e)
