@@ -156,7 +156,7 @@ class ItemsManager(commands.Cog):
 
     @commands.command(name='check_stock')
     async def check_stock(self, ctx, cmd: str):
-        check = check_cmd(cmd)
+        check = check_cmd(cmd)[0]
         print(check)
         print(type(check))
         if check != 0:
