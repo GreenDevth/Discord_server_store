@@ -157,6 +157,8 @@ class ItemsManager(commands.Cog):
     @commands.command(name='check_stock')
     async def check_stock(self, ctx, cmd: str):
         check = check_cmd(cmd)
+        print(check)
+        print(type(check))
         if check != 0:
             item = get_item_info_by_cmd(cmd)
             embed = discord.Embed(
