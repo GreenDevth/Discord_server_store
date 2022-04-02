@@ -184,7 +184,7 @@ class ServerStore(commands.Cog):
                                     "ราคาสินค้า : ${:,d}\n"
                                     "สถานะ : นำส่งแล้ว ✅\n"
                                     "=====================================\n```".format(order_number, member.name,
-                                                                                        title, buy_btn, price)
+                                                                                        title, buy_btn)
                                 )
                                 return
                             else:
@@ -202,7 +202,7 @@ class ServerStore(commands.Cog):
                                     "ราคาสินค้า : ${:,d}\n"
                                     "สถานะ : นำส่งแล้ว ✅\n"
                                     "=====================================\n```".format(order_number, member.name,
-                                                                                        title, buy_btn, price)
+                                                                                        title, buy_btn)
                                 )
                                 return
                 else:
