@@ -130,6 +130,7 @@ class ServerStore(commands.Cog):
         buy_btn = interaction.component.custom_id
         run_channel = self.bot.get_channel(927796274676260944)
         cmd_channel = self.bot.get_channel(925559937323659274)
+        statement = self.bot.get_channel(959738866904989756)
         code = random.randint(9, 99999)
         order_number = f'#{code}'
         items = item_id()
@@ -175,6 +176,16 @@ class ServerStore(commands.Cog):
                                     f' จำนวนคิวจัดส่ง {order}/{queue}```')
                                 await run_channel.send(checkout)
                                 print('run command to send package to player')
+                                await statement.send(
+                                    "📃 **Statement of Order {}**\n"
+                                    "```=====================================\n"
+                                    "ผู้สั่งสินค้า : {}\n"
+                                    "รายการสินค้า : {}\n"
+                                    "ราคาสินค้า : ${:,d}\n"
+                                    "สถานะ : นำส่งแล้ว ✅\n"
+                                    "=====================================\n```".format(order_number, member.name,
+                                                                                        title, buy_btn, price)
+                                )
                                 return
                             else:
                                 queue = check_queue()
@@ -183,6 +194,16 @@ class ServerStore(commands.Cog):
                                     f'```เลขที่ใบสั่งซื้อ {order_number} อยู่ระหว่างการจัดส่ง'
                                     f' จำนวนคิวจัดส่ง {order}/{queue}```', mention_author=False)
                                 print('send information without run command')
+                                await statement.send(
+                                    "📃 **Statement of Order {}**\n"
+                                    "```=====================================\n"
+                                    "ผู้สั่งสินค้า : {}\n"
+                                    "รายการสินค้า : {}\n"
+                                    "ราคาสินค้า : ${:,d}\n"
+                                    "สถานะ : นำส่งแล้ว ✅\n"
+                                    "=====================================\n```".format(order_number, member.name,
+                                                                                        title, buy_btn, price)
+                                )
                                 return
                 else:
                     await interaction.respond(content='⚠ สินค้านี้สำหรับผู้เล่น **Level {}**'.format(level))
