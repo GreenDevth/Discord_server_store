@@ -180,7 +180,9 @@ class ServerStore(commands.Cog):
                                 await statement.send(
                                     f"📃 **Statement of Order {order_number}**\n"
                                     "```=====================================\n"
-                                    f"ผู้สั่งสินค้า : {member.id}\n"
+                                    f"ผู้สั่งสินค้า : {member.name}\n"
+                                    f"discord_id : {member.id}\n"
+                                    f"steam_id : {players_info(member.id)[3]}\n"
                                     f"รายการสินค้า : {title}\n"
                                     f"ราคาสินค้า : {prices}\n"
                                     "สถานะ : นำส่งแล้ว ✅\n"
@@ -198,7 +200,9 @@ class ServerStore(commands.Cog):
                                 await statement.send(
                                     f"📃 **Statement of Order {order_number}**\n"
                                     "```=====================================\n"
-                                    f"ผู้สั่งสินค้า : {member.id}\n"
+                                    f"ผู้สั่งสินค้า : {member.name}\n"
+                                    f"discord_id : {member.id}\n"
+                                    f"steam_id : {players_info(member.id)[3]}\n"
                                     f"รายการสินค้า : {title}\n"
                                     f"ราคาสินค้า : {prices}\n"
                                     "สถานะ : นำส่งแล้ว ✅\n"
