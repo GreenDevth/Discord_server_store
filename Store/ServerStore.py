@@ -110,7 +110,7 @@ class ServerStore(commands.Cog):
                 components=[
                     [
                         Button(style=ButtonStyle.green, label=f'BUY NOW', emoji='💵', custom_id=f'{x[0]}'),
-                        Button(style=ButtonStyle.blue, label=f'ONLY LEVEL {x[10]}', emoji='🔐', disabled=True),
+                        Button(style=ButtonStyle.blue, label=f'ACCESS FOR Lvl. {x[10]}', emoji='🔐', disabled=True),
                         Button(style=ButtonStyle.red, label='PRICE ${:,d}'.format(x[5]), emoji='💳', disabled=True)
                     ]
                 ]
